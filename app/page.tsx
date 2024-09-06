@@ -1,9 +1,28 @@
-import Image from "next/image";
+'use client'
+import { useState } from "react";
+import Navbar from "@/components/NavBar";
+import ProductList from "@/components/ProductList";
+import Footer from "@/components/Footer";
+import Cart from "@/components/Cart";
 
 export default function Home() {
+
+  const [showCart, setShowCart] = useState<boolean>(false);
+
+  function openCart() {
+    setShowCart(true);
+  }
+
+  function closeCart() {
+    setShowCart(false);
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Parafarm front</h1>
+    <main className="">
+      <Navbar openCart={openCart}/>
+      <Cart open={showCart} onClose={closeCart}/>
+      <ProductList/>
+      <Footer/>
     </main>
   );
 }
