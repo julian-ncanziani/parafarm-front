@@ -61,7 +61,7 @@ const NavBar: React.FC<NavBarProps> = ({ openCart }) => {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <MenuButton
+            <button
               onClick={openCart}
               type="button"
               className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white"
@@ -69,7 +69,7 @@ const NavBar: React.FC<NavBarProps> = ({ openCart }) => {
               <span className="absolute -inset-1.5" />
               <span className="sr-only">View notifications</span>
               <FaShoppingCart aria-hidden="true" className="h-6 w-6" />
-            </MenuButton>
+            </button>
 
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
