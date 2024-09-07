@@ -68,16 +68,16 @@ const NavBar: React.FC<NavBarProps> = ({ openCart }) => {
             >
               <span className="absolute -inset-1.5" />
               <span className="sr-only">View notifications</span>
-              <FaShoppingCart aria-hidden="true" className="h-6 w-6" />
+              <FaShoppingCart aria-hidden="true" className="h-6 w-6 mr-5 ml-5" />
             </button>
 
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
               <div>
-                <MenuButton className="relative flex rounded-full bg-gray-800 text-sm hover:text-white">
+                <MenuButton className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white">
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
-                  <FaUser className="h-5 w-5 text-gray-400 bg-gray-800" />
+                  <FaUser className="h-5 w-5" />
                 </MenuButton>
               </div>
               <MenuItems
