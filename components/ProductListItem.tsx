@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import IProduct from '@/interfaces/IProduct'; // Ajusta la ruta si es necesario
 import ICartItem from '@/interfaces/ICartItem'; // Ajusta la ruta si es necesario
-
+import Image from 'next/image';
 
 interface ProductListItemProps {
   product: IProduct;
@@ -61,7 +61,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({ product }) => {
     <div className="flex flex-col h-full">
       <a href={`/${product.name}`} className="flex flex-col h-full">
         <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-          <img
+          <Image
             alt={product.description}
             src={product.image}
             className="h-full w-full object-cover object-center group-hover:opacity-75"

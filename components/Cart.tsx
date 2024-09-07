@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useCart } from '@/context/CartContext';
+import Image from 'next/image';
 
 const products = [
   {
@@ -74,7 +75,7 @@ const Cart: React.FC<CartProps> = ({open, onClose}) => {
                         {products.map((product) => (
                           <li key={product.id} className="flex py-6">
                             <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                              <img
+                              <Image
                                 alt={product.imageAlt}
                                 src={product.imageSrc}
                                 className="h-full w-full object-cover object-center"
