@@ -6,37 +6,13 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useCart } from '@/context/CartContext';
 import Image from 'next/image';
 
-const products = [
-  {
-    id: 1,
-    name: 'Throwback Hip Bag',
-    href: '#',
-    color: 'Salmon',
-    price: '$90.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-    imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-  },
-  {
-    id: 2,
-    name: 'Medium Stuff Satchel',
-    href: '#',
-    color: 'Blue',
-    price: '$32.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-    imageAlt:
-      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-  },
-  // More products...
-]
 interface CartProps {
     open: boolean;
     onClose: () => void;
 }
 const Cart: React.FC<CartProps> = ({open, onClose}) => {
-  //const [open, setOpen] = useState(false)
   
+  const { cart, removeFromCart } = useCart();
 
   return (
     <Dialog open={open} onClose={onClose} className="relative z-10">
@@ -72,31 +48,36 @@ const Cart: React.FC<CartProps> = ({open, onClose}) => {
                   <div className="mt-8">
                     <div className="flow-root">
                       <ul role="list" className="-my-6 divide-y divide-gray-200">
-                        {products.map((product) => (
-                          <li key={product.id} className="flex py-6">
+                        {cart.map((product) => (
+                          <li key={product._id} className="flex py-6">
                             <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                               <Image
-                                alt={product.imageAlt}
-                                src={product.imageSrc}
+                                alt={'img cart'}
+                                src={''}
                                 className="h-full w-full object-cover object-center"
+                                width={500} // Proporciona el ancho de la imagen
+                                height={300} // Proporciona la altura de la imagen
                               />
                             </div>
-
                             <div className="ml-4 flex flex-1 flex-col">
                               <div>
                                 <div className="flex justify-between text-base font-medium text-gray-900">
                                   <h3>
-                                    <a href={product.href}>{product.name}</a>
+                                    <a href={product.name}>{product.name}</a>
+                 
                                   </h3>
                                   <p className="ml-4">{product.price}</p>
                                 </div>
-                                <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                               </div>
                               <div className="flex flex-1 items-end justify-between text-sm">
                                 <p className="text-gray-500">Qty {product.quantity}</p>
 
                                 <div className="flex">
-                                  <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                  <button 
+                                    type="button" 
+                                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                                    onClick={()=> removeFromCart(product._id)}
+                                  >
                                     Remove
                                   </button>
                                 </div>
