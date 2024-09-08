@@ -1,7 +1,6 @@
 'use client'
 // context/CartContext.tsx
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import IProduct from '@/interfaces/IProduct';
 import ICartItem from '@/interfaces/ICartItem';
 
 interface CartContextProps {

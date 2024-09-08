@@ -1,6 +1,3 @@
-'use client'
-
-import { useState } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useCart } from '@/context/CartContext';
@@ -118,7 +115,7 @@ const Cart: React.FC<CartProps> = ({open, onClose}) => {
                         onClick={onClose}
                         className="font-medium text-indigo-600 hover:text-indigo-500"
                       >
-                        Continue Shopping
+                        Continuar compra
                         <span aria-hidden="true"> &rarr;</span>
                       </button>
                     </p>
