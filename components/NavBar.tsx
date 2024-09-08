@@ -1,6 +1,7 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { FaUser, FaSearch, FaShoppingCart } from 'react-icons/fa'; // Importa el ícono de FontAwesome
+import { useCart } from '@/context/CartContext';
 
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
@@ -18,6 +19,9 @@ interface NavBarProps {
 }
 
 const NavBar: React.FC<NavBarProps> = ({ openCart }) => {
+
+  const { getItemCount } = useCart();
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -61,15 +65,24 @@ const NavBar: React.FC<NavBarProps> = ({ openCart }) => {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <button
-              onClick={openCart}
-              type="button"
-              className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white"
-            >
-              <span className="absolute -inset-1.5" />
-              <span className="sr-only">View notifications</span>
-              <FaShoppingCart aria-hidden="true" className="h-6 w-6 mr-5 ml-5" />
-            </button>
+          {/**btn para abrir el carrito */}
+          <button
+            onClick={openCart}
+            type="button"
+            className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white mr-5 ml-5"
+          >
+            {/* Icono del carrito */}
+            <FaShoppingCart aria-hidden="true" className="h-6 w-6" />           
+            {/* Contador de ítems */}
+            {getItemCount() > 0 && (
+                <span
+                  className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-red-600 text-white text-xs font-bold"
+                  style={{ transform: 'translate(50%, -50%)' }}
+                >
+                  {getItemCount()}
+                </span>
+              )}
+          </button>
 
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">

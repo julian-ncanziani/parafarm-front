@@ -10,9 +10,15 @@ interface CartProps {
     open: boolean;
     onClose: () => void;
 }
+
 const Cart: React.FC<CartProps> = ({open, onClose}) => {
   
   const { cart, removeFromCart } = useCart();
+
+  const setTotal = () => {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
 
   return (
     <Dialog open={open} onClose={onClose} className="relative z-10">
@@ -66,11 +72,11 @@ const Cart: React.FC<CartProps> = ({open, onClose}) => {
                                     <a href={product.name}>{product.name}</a>
                  
                                   </h3>
-                                  <p className="ml-4">{product.price}</p>
+                                  <p className="ml-4">${product.price}</p>
                                 </div>
                               </div>
                               <div className="flex flex-1 items-end justify-between text-sm">
-                                <p className="text-gray-500">Qty {product.quantity}</p>
+                                <p className="text-gray-500">Cantidad {product.quantity}</p>
 
                                 <div className="flex">
                                   <button 
@@ -78,7 +84,7 @@ const Cart: React.FC<CartProps> = ({open, onClose}) => {
                                     className="font-medium text-indigo-600 hover:text-indigo-500"
                                     onClick={()=> removeFromCart(product._id)}
                                   >
-                                    Remove
+                                    Quitar
                                   </button>
                                 </div>
                               </div>
@@ -92,10 +98,10 @@ const Cart: React.FC<CartProps> = ({open, onClose}) => {
 
                 <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                   <div className="flex justify-between text-base font-medium text-gray-900">
-                    <p>Subtotal</p>
-                    <p>$262.00</p>
+                    <p>Total</p>
+                    <p>${setTotal()}</p>
                   </div>
-                  <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+                  <p className="mt-0.5 text-sm text-gray-500">Clickea en checkout para continuar con el pago</p>
                   <div className="mt-6">
                     <a
                       href="#"
@@ -124,7 +130,7 @@ const Cart: React.FC<CartProps> = ({open, onClose}) => {
         </div>
       </div>
     </Dialog>
-  )
-}
+  );
+};
 
 export default Cart;

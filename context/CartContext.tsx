@@ -8,6 +8,7 @@ interface CartContextProps {
   cart: ICartItem[];
   addToCart: (product: ICartItem) => void;
   removeFromCart: (id: string) => void;
+  getItemCount: () => number;
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -38,10 +39,14 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       localStorage.setItem('cart', JSON.stringify(updateCart));
       return updateCart;
     });
-  }
+  };
+
+  const getItemCount = () => {
+    return cart.reduce((total, item) => total + item.quantity, 0);
+  };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, getItemCount }}>
       {children}
     </CartContext.Provider>
   );
