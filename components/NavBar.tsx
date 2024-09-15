@@ -1,3 +1,4 @@
+'use client'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { FaUser, FaSearch, FaShoppingCart } from 'react-icons/fa'; // Importa el ícono de FontAwesome

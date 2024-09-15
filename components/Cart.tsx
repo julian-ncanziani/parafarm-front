@@ -1,3 +1,4 @@
+'use client'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, Menu } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useCart } from '@/context/CartContext';

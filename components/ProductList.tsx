@@ -1,23 +1,24 @@
-'use client'
-import { useQuery } from "@tanstack/react-query";
-import Loading from "@/app/loading";
 import ProductListItem from "./ProductListItem";
 import IProduct from "@/interfaces/IProduct";
+import ICustomResponse from "@/interfaces/ICustomResponse";
 
+const getProducts = async (): Promise<ICustomResponse<IProduct[]>> => {
+  const response = await fetch(process.env.NEXT_PUBLIC_HOST + '/api/products', { cache: 'no-store' });
+  const data = await response.json();
+  return data;
+};
 
-export default function ProductList() {
+export default async function ProductList() {
 
-  const { isLoading, error, data } = useQuery({
-    queryKey: ['queryProducts'],
-    queryFn: (): Promise<IProduct[]> =>
-      fetch('https://parafarm-back.onrender.com/products', { cache: "no-store"} ).then((res) =>
-        res.json(),
-      ),
-  });
+  const {data, error, message } = await getProducts();
 
-  if (isLoading) return <Loading></Loading>
-
-  if (error) return 'An error has occurred: ' + error.message
+  if (error) {
+    return (
+      <div className="bg-white min-h-[80vh] flex items-center justify-center">
+        <p className="text-red-500 text-lg font-bold">{message}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white min-h-[80vh]">
@@ -28,7 +29,7 @@ export default function ProductList() {
         </div>
         {/* Lista de productos */}
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-          {data?.map((product) => (
+          {data?.map((product: IProduct) => (
             <ProductListItem product={product} key={product._id}/>
           ))}
         </div>
