@@ -6,7 +6,7 @@ import Loading from "./loading";
 import { CartProvider } from "@/context/CartContext";
 import { getServerSession } from "next-auth";
 import SessionProvider from '../context/SessionProvider';
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
 
 const inter = Inter({ subsets: ["latin"] });
 
