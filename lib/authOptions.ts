@@ -18,7 +18,7 @@ export const authOptions: AuthOptions = {
         async jwt({ user, token, account }) {
             if (user && account) {
                 try {
-                    const response = await fetch('http://localhost:3001/users', {
+                    const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/users`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
