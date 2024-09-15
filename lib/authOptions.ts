@@ -18,7 +18,8 @@ export const authOptions: AuthOptions = {
         async jwt({ user, token, account }) {
             if (user && account) {
                 try {
-                    const response = await fetch(`${process.env.BACK_URL}users`, {
+                    console.log(process.env.BACK_URL);
+                    const response = await fetch(`${process.env.BACK_URL}/users`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
