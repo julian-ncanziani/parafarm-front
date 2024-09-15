@@ -1,24 +1,51 @@
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, Menu } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useCart } from '@/context/CartContext';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
+import SignInBtn from './SingInBtn';
 
 interface CartProps {
-    open: boolean;
-    onClose: () => void;
+    
 }
 
-const Cart: React.FC<CartProps> = ({open, onClose}) => {
+const Cart: React.FC<CartProps> = () => {
   
-  const { cart, removeFromCart } = useCart();
+  const { cart, removeFromCart, isOpen, closeCart } = useCart();
+  const { data: session } = useSession();
+  
 
   const setTotal = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
+  const printCheckoutOrSignIn = () => {
+    if(session?.user){
+      return(
+        <div className="mt-6">
+          <a
+            href="#"
+            className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+          >
+            Checkout
+          </a>
+        </div>
+      )
+    }else{
+      return(
+        <div
+        className="block w-full px-4 py-2 text-sm font-medium text-center bg-blue-600 rounded hover:bg-blue-500 transition duration-300 ease-in-out cursor-pointer"
+        >   
+          <SignInBtn text='Logeate para continuar' textColor='white'/>
+        </div>
+      )
+    }
+
+  }
+
 
   return (
-    <Dialog open={open} onClose={onClose} className="relative z-10">
+    <Dialog open={isOpen} onClose={closeCart} className="relative z-10">
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity duration-500 ease-in-out data-[closed]:opacity-0"
@@ -38,7 +65,7 @@ const Cart: React.FC<CartProps> = ({open, onClose}) => {
                     <div className="ml-3 flex h-7 items-center">
                       <button
                         type="button"
-                        onClick={onClose}
+                        onClick={closeCart}
                         className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
                       >
                         <span className="absolute -inset-0.5" />
@@ -98,24 +125,17 @@ const Cart: React.FC<CartProps> = ({open, onClose}) => {
                     <p>Total</p>
                     <p>${setTotal()}</p>
                   </div>
-                  <p className="mt-0.5 text-sm text-gray-500">Clickea en checkout para continuar con el pago</p>
-                  <div className="mt-6">
-                    <a
-                      href="#"
-                      className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-                    >
-                      Checkout
-                    </a>
-                  </div>
+                  <p className="mt-0.5 text-sm text-gray-500">Continua con el pago</p>
+                  {printCheckoutOrSignIn()}
                   <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                     <p>
-                      or{' '}
+                      o{' '}
                       <button
                         type="button"
-                        onClick={onClose}
+                        onClick={closeCart}
                         className="font-medium text-indigo-600 hover:text-indigo-500"
                       >
-                        Continuar compra
+                        Volver al shopping
                         <span aria-hidden="true"> &rarr;</span>
                       </button>
                     </p>
