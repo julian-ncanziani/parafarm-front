@@ -1,17 +1,17 @@
-'use client'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { FaUser, FaSearch, FaShoppingCart } from 'react-icons/fa'; // Importa el ícono de FontAwesome
-import { useCart } from '@/context/CartContext';
-import { useSession } from 'next-auth/react';
+import { FaUser } from 'react-icons/fa'; // Importa el ícono de FontAwesome
+import { getServerSession } from 'next-auth';
 import SignInBtn from './SingInBtn';
 import SignOutBtn from './SignOut';
+import OpenCartBtn from './OpenCartBtn';
+import { authOptions } from '@/lib/authOptions';
 
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
+  { name: 'Nav 1', href: '#', current: true },
+  { name: 'Nav 2', href: '#', current: false },
+  { name: 'Nav 3', href: '#', current: false },
+  { name: 'Nav 4', href: '#', current: false },
 ];
 
 function classNames(...classes: any) {
@@ -22,23 +22,34 @@ interface NavBarProps {
   
 }
 
-const NavBar: React.FC<NavBarProps> = () => {
+const NavBar: React.FC<NavBarProps> = async () => {
 
-  const { getItemCount, openCart } = useCart();
-  const { data: session } = useSession();
 
+  const session = await getServerSession(authOptions);
+  
   const printUserOptions = () => {
-    if(session) {
+    if(session && session.user.rol === 'client') {
       return (
         <>
           <MenuItem>
-            <a href="#" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+            <a href="/profile" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
               Your Profile
             </a>
           </MenuItem>
           <MenuItem>
             <a href="#" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
               Settings
+            </a>
+          </MenuItem>
+          <SignOutBtn/>
+        </>
+      )
+    }else if(session && session.user.rol === 'admin'){
+      return (
+        <>
+          <MenuItem>
+            <a href="/admin" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+              Admin Dashboard
             </a>
           </MenuItem>
           <SignOutBtn/>
@@ -82,53 +93,28 @@ const NavBar: React.FC<NavBarProps> = () => {
                 ))}
               </div>
             </div>
-
-            {/* Search input */}
-            <div className="relative hidden sm:block sm:w-64 ml-auto">
-              <input
-                type="text"
-                placeholder="Search"
-                className="block w-full pl-10 pr-4 py-2 text-white-900 placeholder-gray-500 bg-gray-700 rounded-md border-none focus:outline-none focus:ring-0"
-              />
-              <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true" />
-            </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-          {/**btn para abrir el carrito */}
-          <button
-            onClick={openCart}
-            type="button"
-            className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white mr-5 ml-5"
-          >
-            {/* Icono del carrito */}
-            <FaShoppingCart aria-hidden="true" className="h-6 w-6" />           
-            {/* Contador de ítems */}
-            {getItemCount() > 0 && (
-                <span
-                  className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-red-600 text-white text-xs font-bold"
-                  style={{ transform: 'translate(50%, -50%)' }}
-                >
-                  {getItemCount()}
-                </span>
-              )}
-          </button>
+          <OpenCartBtn/>
               
-            {/* Profile dropdown */}
-            <Menu as="div" className="relative ml-3">
-              <div>
-                <MenuButton className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white">
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">Open user menu</span>
-                  <FaUser className="h-5 w-5" />
-                </MenuButton>
-              </div>
-              <MenuItems
-                transition
-                className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-              >
-                {printUserOptions()}
-              </MenuItems>
-            </Menu>
+          {/* Profile dropdown */}
+          <Menu as="div" className="relative ml-3">
+            <div>
+              <MenuButton className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white">
+                <span className="absolute -inset-1.5" />
+                <span className="sr-only">Open user menu</span>
+                {session 
+                  ? <img src={session.user.image as string} alt="session img" className="h-10 w-10 rounded-full"/>
+                  : <FaUser className="h-5 w-5" />}
+              </MenuButton>
+            </div>
+            <MenuItems
+              transition
+              className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+            >
+              {printUserOptions()}
+            </MenuItems>
+          </Menu>
           </div>
         </div>
       </div>
