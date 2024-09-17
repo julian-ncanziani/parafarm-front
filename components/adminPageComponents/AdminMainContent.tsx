@@ -1,22 +1,26 @@
-// app/components/MainContent.tsx
+'use client'
 import { FC } from 'react';
 import UsersList from './UsersContent';
 import ProductContent from './ProductsContent';
-
+import OrdersContent from './OrdersContent';
+import { useAdminContext } from '@/context/AdminContext';
 interface AdminMainContentProps {
-  activeTab: 'home' | 'orders' | 'users' | 'settings' | 'products';
+
 
 }
 
-const AdminMainContent: FC<AdminMainContentProps> = ({ activeTab }) => {
+const AdminMainContent: FC<AdminMainContentProps> = () => {
+
+  const { activeTab } = useAdminContext();
+
   return (
-    <main className="flex-grow p-6">
+    <div className="flex-1 max-h-100">
       {activeTab === 'home' && <div>Home Content</div>}
-      {activeTab === 'orders' && <div>Orders Content</div>}
-      {activeTab === 'products' && <div>Products List<ProductContent/></div>}
+      {activeTab === 'orders' && <OrdersContent/>}
+      {activeTab === 'products' && <ProductContent/>}
       {activeTab === 'users' && <UsersList/>}
       {activeTab === 'settings' && <div>Settings Content</div>}    
-    </main>
+    </div>
   );
 };
 
