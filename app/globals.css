@@ -24,3 +24,19 @@ body {
     text-wrap: balance;
   }
 }
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 1000px; /* Ajusta según el tamaño de tus elementos */
+  }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.5s ease-out forwards;
+  overflow: hidden;
+}

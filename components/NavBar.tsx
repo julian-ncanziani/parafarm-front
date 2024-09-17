@@ -1,6 +1,6 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { FaUser } from 'react-icons/fa'; // Importa el ícono de FontAwesome
+import { FaUser } from 'react-icons/fa'; 
 import { getServerSession } from 'next-auth';
 import SignInBtn from './SingInBtn';
 import SignOutBtn from './SignOut';
@@ -105,7 +105,7 @@ const NavBar: React.FC<NavBarProps> = async () => {
                 <span className="sr-only">Open user menu</span>
                 {session 
                   ? <img src={session.user.image as string} alt="session img" className="h-10 w-10 rounded-full"/>
-                  : <FaUser className="h-5 w-5" />}
+                  : <FaUser className="h-7 w-7" />}
               </MenuButton>
             </div>
             <MenuItems
