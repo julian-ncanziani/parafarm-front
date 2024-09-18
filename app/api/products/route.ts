@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 // El handler que maneja la solicitud GET
 export async function GET() {
   try {
-    const response = await fetch('https://parafarm-back.onrender.com/products', { cache: 'no-store' });
+    const response = await fetch('https://parafarm-back.onrender.com/products/active', { cache: 'no-store' });
 
     if (!response.ok) {
       throw(`Error fetching products: ${response.url} ${response.status} ${response.statusText}`);

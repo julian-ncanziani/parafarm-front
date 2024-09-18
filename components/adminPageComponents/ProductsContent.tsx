@@ -15,6 +15,7 @@ interface IProduct {
 const ProductContent: FC = () => {
   const [state, setState] = useState<ICustomResponse<IProduct[]>>({ data: [], error: false, message: '' });
   const [loading, setLoading] = useState(true);
+  const [inputfilter, setInputfilter] = useState('');
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -32,10 +33,25 @@ const ProductContent: FC = () => {
     fetchProducts();
   }, []);
 
+  const filteredProducts = state.data?.filter(product =>
+    product.name.toLowerCase().includes(inputfilter.toLowerCase())
+  );
+
   return (
     <div className="p-6 h-full flex flex-col">
       <h2 className="text-2xl font-bold mb-4">Products</h2>
       <p className="text-gray-600 mb-4">A list of all the products in your inventory including their name, description, stock, and price.</p>
+      {/* Search and Table container */}
+      <div className="flex flex-col md:flex-row md:items-center md:space-x-4 mb-4">
+        {/* Search input */}
+        <input
+          type="text"
+          placeholder="Search by name"
+          value={inputfilter}
+          onChange={(e) => setInputfilter(e.target.value)}
+          className="mb-4 md:mb-0 p-2 border border-gray-300 rounded w-full md:w-64" // Adjust width as needed
+        />
+      </div>
       <div className="flex-1 overflow-x-auto">
         {loading ? (
           <div className="flex justify-center items-center min-h-screen">
@@ -55,7 +71,7 @@ const ProductContent: FC = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {state.data?.map((product) => (
+                {filteredProducts?.map((product) => (
                   <tr key={product._id}>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{product.name}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.description}</td>
