@@ -104,7 +104,7 @@ const NavBar: React.FC<NavBarProps> = async () => {
                 <span className="absolute -inset-1.5" />
                 <span className="sr-only">Open user menu</span>
                 {session 
-                  ? <img src={session.user.image as string} alt="session img" className="h-10 w-10 rounded-full"/>
+                  ? <img src={`${session.user.image as string}`} alt="session img" className="h-10 w-10 rounded-full"/>
                   : <FaUser className="h-7 w-7" />}
               </MenuButton>
             </div>
