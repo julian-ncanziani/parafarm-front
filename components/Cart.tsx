@@ -46,7 +46,7 @@ const Cart: React.FC<CartProps> = () => {
 
 
   return (
-    <Dialog open={isOpen} onClose={closeCart} className="relative z-10">
+    <Dialog open={isOpen} onClose={closeCart} className="relative z-20">
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity duration-500 ease-in-out data-[closed]:opacity-0"

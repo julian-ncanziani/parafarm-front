@@ -185,6 +185,7 @@ const EditProductForm: React.FC<IEditProductFormProps> = ({ product }) => {
             <dt className="text-sm font-medium leading-6 text-gray-900">Categoría</dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
               <input
+                disabled
                 type="text"
                 name="category"
                 defaultValue={product?.category_id}

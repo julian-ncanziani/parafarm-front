@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import ICustomResponse from '@/interfaces/ICustomResponse';
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
+import EditProductModal from './EditProductsModal';
+
 
 interface IProduct {
   _id: string;
@@ -19,9 +21,10 @@ const ProductContent: FC = () => {
   const [state, setState] = useState<ICustomResponse<IProduct[]>>({ data: [], error: false, message: '' });
   const [loading, setLoading] = useState(true);
   const [inputfilter, setInputfilter] = useState('');
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);// Array de ids de productos seleccionados
   const [checkboxEdit, setCheckboxEdit] = useState<string[]>([]); // Estado para los IDs seleccionados
-  const [selectAll, setSelectAll] = useState(false); // Estado para el checkbox de "Select All"
-
+  const [selectAll, setSelectAll] = useState<boolean>(false); // Estado para el checkbox de "Select All"
+  const [editmodal, setEditmodal] = useState<boolean>(false);// Estado para el moda de edicion de productos
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -64,17 +67,28 @@ const ProductContent: FC = () => {
   };
 
   const handleEditSelected = () => {
-    // Aquí puedes manejar la lógica de edición de los productos seleccionados
-    console.log("Productos seleccionados para editar:", checkboxEdit);
+    setEditmodal(true);
+    //console.log("Productos seleccionados para editar:", checkboxEdit);
   };
 
   const handleRedirectToEditPage = (id: string) => {
     router.push(`/admin/products/${id}`);
   };
 
+  const closeEditmodal = () => {
+    setEditmodal(false);
+  }
+
+
+  
 
   return (
     <div className="p-6 h-full flex flex-col">
+      <EditProductModal 
+        productsId={checkboxEdit}
+        closemodal={closeEditmodal} 
+        isOpen={editmodal}
+      />
       <h2 className="text-2xl font-bold mb-4">Productos</h2>
       <p className="text-gray-600 mb-4">A list of all the products in your inventory including their name, description, stock, and price.</p>    
       {/* Search input */}

@@ -9,8 +9,7 @@ const getProducts = async (): Promise<ICustomResponse<IProduct[]>> => {
 };
 
 export default async function ProductList() {
-
-  const {data, error, message } = await getProducts();
+  const { data, error, message } = await getProducts();
 
   if (error) {
     return (
@@ -20,22 +19,29 @@ export default async function ProductList() {
     );
   }
 
+  if (!data || data.length === 0) {
+    return (
+      <div className="bg-white min-h-[80vh] flex items-center justify-center">
+        <p className="text-gray-500 text-lg">No hay productos disponibles en este momento.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-white min-h-[80vh]">
-      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+    <div className="bg-white min-h-[80vh] py-16">
+      <div className="container mx-auto px-4">
         {/* Título de la sección */}
-        <div className="mb-8 border-b border-gray-300 pb-4">
-          <h2 className="text-2xl font-bold text-black">Productos Destacados</h2>
+        <div className="mb-8 text-center">
+          <h2 className="text-3xl font-bold text-black">Productos Destacados</h2>
         </div>
+
         {/* Lista de productos */}
-        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-          {data?.map((product: IProduct) => (
-            <ProductListItem product={product} key={product._id}/>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {data.map((product: IProduct) => (
+            <ProductListItem product={product} key={product._id} />
           ))}
         </div>
       </div>
     </div>
-  )
+  );
 }
-
-

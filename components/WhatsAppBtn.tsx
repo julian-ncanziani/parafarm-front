@@ -11,10 +11,9 @@ const WhatsappBtn = () => {
                 href={`https://wa.me/${tel}?text=${text}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="fixed bottom-4 right-4 bg-green-500 hover:bg-green-600 text-white py-2 px-3 rounded-full flex items-center shadow-lg"
+                className="fixed bottom-5 right-5 z-19 bg-green-500 hover:bg-green-600 text-white py-2 px-3 rounded-full flex items-center shadow-lg transition-shadow"
                 >
-                <FaWhatsapp className="w-5 h-5 mr-2" />
-                <span className="text-sm">Atencion al Cliente</span> {/* Smaller text */}
+                <FaWhatsapp className="w-6 h-6" />
             </a>
         </>
     )
