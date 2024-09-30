@@ -4,8 +4,8 @@ import UsersList from './UsersContent';
 import ProductContent from './ProductsContent';
 import OrdersContent from './OrdersContent';
 import { useAdminContext } from '@/context/AdminContext';
-interface AdminMainContentProps {
 
+interface AdminMainContentProps {
 
 }
 

@@ -1,6 +1,6 @@
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
-
+import Loading from "../loading";
 
 
 export default async function Server() {
@@ -10,6 +10,7 @@ export default async function Server() {
     return (
       <>
       {'server session: ' + session?.user.name + ' ' + session?.user.rol}
+      <Loading></Loading>
       </>
     );
 }

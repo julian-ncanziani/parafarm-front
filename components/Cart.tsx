@@ -1,6 +1,7 @@
 'use client'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, Menu } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
+import { MdDelete } from "react-icons/md";
 import { useCart } from '@/context/CartContext';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
@@ -109,7 +110,7 @@ const Cart: React.FC<CartProps> = () => {
                                     className="font-medium text-indigo-600 hover:text-indigo-500"
                                     onClick={()=> removeFromCart(product._id)}
                                   >
-                                    Quitar
+                                    <MdDelete className="text-gray-500 w-7 h-7"/>
                                   </button>
                                 </div>
                               </div>

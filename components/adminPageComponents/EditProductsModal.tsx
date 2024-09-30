@@ -1,8 +1,11 @@
 'use client';
 import { useState, useEffect, FC } from "react";
+import { updatemanyproductsBody } from "@/app/api/admin/products/route";
+import axios from "axios";
+import ICustomResponse from "@/interfaces/ICustomResponse";
 
 interface EditProductModalProps {
-  productsId: string[];
+  productsIds: string[];
   isOpen: boolean;
   closemodal: () => void;
 }
@@ -13,7 +16,8 @@ interface Field {
   value: string | number | boolean;
 }
 
-const EditProductModal: FC<EditProductModalProps> = ({ productsId, isOpen, closemodal }) => {
+const EditProductModal: FC<EditProductModalProps> = ({ productsIds, isOpen, closemodal }) => {
+
   const [showModal, setShowModal] = useState(false);
   const [selectedFields, setSelectedFields] = useState<Field[]>([]);
   const [values, setValues] = useState({
@@ -62,29 +66,39 @@ const EditProductModal: FC<EditProductModalProps> = ({ productsId, isOpen, close
     !selectedFields.some(selected => selected.name === field.name)
   );
 
-  const saveChanges = () => {
-    const updatedFields = selectedFields.map(field => {
-      if (field.name === 'price') {
-        const amount = values.percentage
-          ? values.pricePercentage  // Si es porcentaje, usar directamente el valor ingresado
-          : values.price;  // Si no, usar el precio literal
-        
-        return {
-          field: field.name,
-          value: {
-            amount,
-            percentage: values.percentage  // Mantener si es porcentaje o no
-          }
+  /** Envio los datos al backend para guardar los cambios de los campos que acabo de modificar */
+  const saveChanges = async () => {
+    // Inicializa un objeto vacío para almacenar los cambios
+    const updatedData: updatemanyproductsBody = {
+      productIds: productsIds,  // IDs de los productos que estás modificando
+    };
+  
+    // Procesamos los campos seleccionados
+    selectedFields.forEach(field => {
+      if (field.name === 'active') {
+        // Solo añade 'active' si su valor es diferente a undefined
+        updatedData.active = values.active;
+      } else if (field.name === 'price') {
+        // Solo añade 'price' si se ha seleccionado
+        updatedData.price = {
+          amount: values.percentage ? values.pricePercentage : values.price,
+          percentaje: values.percentage,
         };
       }
-      return {
-        field: field.name,
-        value: values[field.name as keyof typeof values]
-      };
     });
-
-    console.log(productsId, updatedFields);
+    // Verificamos si hay cambios antes de hacer la llamada
+    if (Object.keys(updatedData).length === 1) {
+      alert('No se han realizado cambios para enviar.');
+      return; // No hacemos nada si no hay cambios
+    }   
+    const response = await axios.patch('/api/admin/products', updatedData); 
+    const data: ICustomResponse<null> = response.data;
+    alert(data.message);
+    closemodal();  // Cierra el modal
+    window.location.reload(); // Recarga la página
+    
   };
+  
 
   if (!showModal) return null;
 

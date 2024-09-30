@@ -85,7 +85,7 @@ const ProductContent: FC = () => {
   return (
     <div className="p-6 h-full flex flex-col">
       <EditProductModal 
-        productsId={checkboxEdit}
+        productsIds={checkboxEdit}
         closemodal={closeEditmodal} 
         isOpen={editmodal}
       />

@@ -1,4 +1,5 @@
 // app/api/users/route.ts
+import axios from 'axios';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
@@ -12,5 +13,32 @@ export async function GET() {
   } catch (error) {
     console.error('Error fetching users:', error);
     return NextResponse.json({data: null, error: true, message: 'Error fetching products'});
+  }
+}
+
+
+export interface updatemanyproductsBody {
+  productIds: string[];
+  active?: boolean;
+  price?: {
+    amount: number,
+    percentaje: boolean,
+  }
+}
+
+export async function PATCH(req: Request) {
+  try {
+    const body: updatemanyproductsBody = await req.json();
+    const response = await axios.patch('https://parafarm-back.onrender.com/products/updatemany', body, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(response.statusText)
+    const data = response.data;
+    return NextResponse.json({data: data, error: false, message: 'productos updateados ok'});
+  } catch (error) {
+    //console.error(error);
+    return NextResponse.json({data: null, error: true, message: 'Error updateing products'});
   }
 }

@@ -65,12 +65,13 @@ const NavBar: React.FC<NavBarProps> = async () => {
   }
 
   return (
-    <Disclosure as="nav" className="bg-gray-800 fixed top-0 w-full">
-        <Image 
-          src={'/images/logo_parafarm.png'} 
-          width={200} height={100} 
-          alt='logo'
-        />
+    <Disclosure as="nav" className="bg-gray-800 fixed top-0 w-full ">
+    <Image 
+      className="md:ml-5 sm:ml-0"
+      src={'/images/logo_parafarm.png'} 
+      width={200} height={100} 
+      alt='logo'
+    />
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">

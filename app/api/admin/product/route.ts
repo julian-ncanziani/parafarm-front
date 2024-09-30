@@ -23,7 +23,7 @@ export async function PATCH(req: Request) {
   try {
     const body = await req.json();  // Lee el cuerpo de la solicitud PATCH
 
-    const response = await fetch(`https://parafarm-back.onrender.com/products/${id}`, {
+    const response = await fetch(`https://parafarm-back.onrender.com/products/updateone/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
 export default function CustomDropdown() {
+
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
@@ -22,10 +23,7 @@ export default function CustomDropdown() {
       <div>
         <button
           onClick={handleToggle}
-          onMouseEnter={() => {
-            if(isOpen) return;
-            else setIsOpen(true)}
-          }
+          onMouseEnter={() =>  setIsOpen(true)}
           className="flex items-center text-white px-4 py-2 rounded-md focus:outline-none"
         >
           Catalogo
@@ -36,8 +34,7 @@ export default function CustomDropdown() {
       <div
         className={`absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-30 transition-all duration-300 ease-in-out transform ${
           isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-        }`}
-        
+        }`}        
         onMouseLeave={() => setIsOpen(false)}
       >
         <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">

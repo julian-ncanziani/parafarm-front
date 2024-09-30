@@ -42,14 +42,16 @@ const Footer: React.FC = () => (
             <a href="https://facebook.com" className="text-gray-400 hover:text-white" aria-label="Facebook">
               <FaFacebookF className="h-5 w-5" />
             </a>
+            {/**
             <a href="https://twitter.com" className="text-gray-400 hover:text-white" aria-label="Twitter">
               <FaTwitter className="h-5 w-5" />
             </a>
-            <a href="https://instagram.com" className="text-gray-400 hover:text-white" aria-label="Instagram">
-              <FaInstagram className="h-5 w-5" />
-            </a>
             <a href="https://linkedin.com" className="text-gray-400 hover:text-white" aria-label="LinkedIn">
               <FaLinkedinIn className="h-5 w-5" />
+            </a>
+             */}
+            <a href="https://instagram.com" className="text-gray-400 hover:text-white" aria-label="Instagram">
+              <FaInstagram className="h-5 w-5" />
             </a>
           </div>
         </div>
@@ -57,7 +59,7 @@ const Footer: React.FC = () => (
     </div>
     <div className="bg-gray-900 py-4 mt-6 text-center">
       <p className="text-gray-400 text-sm">
-        &copy; {new Date().getFullYear()} Comercio XYZ. Todos los derechos reservados.
+        &copy; {new Date().getFullYear()} Parafarmacia Argentina. Todos los derechos reservados.
       </p>
     </div>
   </footer>
