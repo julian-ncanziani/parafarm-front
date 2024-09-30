@@ -79,8 +79,8 @@ const Cart: React.FC<CartProps> = () => {
                   <div className="mt-8">
                     <div className="flow-root">
                       <ul role="list" className="-my-6 divide-y divide-gray-200">
-                        {cart.map((product) => (
-                          <CartItem product={product}/>
+                        {cart.map((product, index) => (
+                          <CartItem key={'cartitem' + index} product={product}/>
                         ))}
                       </ul>
                     </div>
