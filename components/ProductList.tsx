@@ -3,6 +3,7 @@ import IProduct from "@/interfaces/IProduct";
 import ICustomResponse from "@/interfaces/ICustomResponse";
 
 const getProducts = async (): Promise<ICustomResponse<IProduct[]>> => {
+  
   const response = await fetch(process.env.NEXT_PUBLIC_HOST + '/api/products', { cache: 'no-store' });
   const data = await response.json();
   return data;

@@ -34,7 +34,6 @@ export async function PATCH(req: Request) {
         'Content-Type': 'application/json',
       },
     });
-    console.log(response.statusText)
     const data = response.data;
     return NextResponse.json({data: data, error: false, message: 'productos updateados ok'});
   } catch (error) {

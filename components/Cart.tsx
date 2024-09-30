@@ -1,11 +1,10 @@
 'use client'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, Menu } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { MdDelete } from "react-icons/md";
 import { useCart } from '@/context/CartContext';
-import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import SignInBtn from './SingInBtn';
+import CartItem from './CartItem';
 
 interface CartProps {
     
@@ -13,7 +12,7 @@ interface CartProps {
 
 const Cart: React.FC<CartProps> = () => {
   
-  const { cart, removeFromCart, isOpen, closeCart } = useCart();
+  const { cart, isOpen, closeCart } = useCart();
   const { data: session } = useSession();
   
 
@@ -81,41 +80,7 @@ const Cart: React.FC<CartProps> = () => {
                     <div className="flow-root">
                       <ul role="list" className="-my-6 divide-y divide-gray-200">
                         {cart.map((product) => (
-                          <li key={product._id} className="flex py-6">
-                            <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                              <Image
-                                alt={'img cart'}
-                                src={''}
-                                className="h-full w-full object-cover object-center"
-                                width={500} // Proporciona el ancho de la imagen
-                                height={300} // Proporciona la altura de la imagen
-                              />
-                            </div>
-                            <div className="ml-4 flex flex-1 flex-col">
-                              <div>
-                                <div className="flex justify-between text-base font-medium text-gray-900">
-                                  <h3>
-                                    <a href={product.name}>{product.name}</a>
-                 
-                                  </h3>
-                                  <p className="ml-4">${product.price}</p>
-                                </div>
-                              </div>
-                              <div className="flex flex-1 items-end justify-between text-sm">
-                                <p className="text-gray-500">Cantidad {product.quantity}</p>
-
-                                <div className="flex">
-                                  <button 
-                                    type="button" 
-                                    className="font-medium text-indigo-600 hover:text-indigo-500"
-                                    onClick={()=> removeFromCart(product._id)}
-                                  >
-                                    <MdDelete className="text-gray-500 w-7 h-7"/>
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
+                          <CartItem product={product}/>
                         ))}
                       </ul>
                     </div>

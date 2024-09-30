@@ -4,7 +4,7 @@ import ICartItem from '@/interfaces/ICartItem';
 
 interface CartContextProps {
   cart: ICartItem[];
-  addToCart: (product: ICartItem) => void;
+  addToCart: (product: ICartItem,  quantity?: number) => void;
   removeFromCart: (id: string) => void;
   getItemCount: () => number;
   isOpen: boolean;
@@ -26,13 +26,33 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);  
 
-  const addToCart = (item: ICartItem) => {
+  const addToCart = (item: ICartItem, quantity: number = 1) => {
     setCart((prevCart) => {
-      const updatedCart = [...prevCart, item];
+      // Busca si el producto ya existe en el carrito
+      const itemExists = prevCart.find((cartItem) => cartItem._id === item._id);
+  
+      let updatedCart;
+  
+      if (itemExists) {
+        // Si el producto ya está en el carrito, actualiza su cantidad
+        updatedCart = prevCart.map((cartItem) =>
+          cartItem._id === item._id
+            ? { ...cartItem, quantity: cartItem.quantity + quantity }
+            : cartItem
+        );
+      } else {
+        // Si no está en el carrito, agrégalo con la cantidad especificada
+        updatedCart = [...prevCart, { ...item, quantity }];
+      }
+  
+      // Guarda el carrito actualizado en localStorage
       localStorage.setItem('cart', JSON.stringify(updatedCart));
+  
+      // Actualiza el estado del carrito
       return updatedCart;
-    })
+    });
   };
+  
 
   const removeFromCart = (itemId: string) => {
     setCart((prevCart) => {
@@ -43,7 +63,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const getItemCount = () => {
-    return cart.reduce((total, item) => total + item.quantity, 0);
+    return cart.length; // Devuelve la cantidad de productos diferentes
   };
 
   const openCart = () => {
