@@ -1,6 +1,8 @@
 'use client'
 import { FaShoppingCart } from "react-icons/fa";
 import { useCart } from "@/context/CartContext";
+
+
 const OpenCartBtn = () => {
 
     const { openCart, getItemCount } = useCart();

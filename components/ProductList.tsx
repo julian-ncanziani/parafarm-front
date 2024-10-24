@@ -1,11 +1,11 @@
+import axios from 'axios';
 import ProductListItem from "./ProductListItem";
 import IProduct from "@/interfaces/IProduct";
 import ICustomResponse from "@/interfaces/ICustomResponse";
 
 const getProducts = async (): Promise<ICustomResponse<IProduct[]>> => {
-  
-  const response = await fetch(process.env.NEXT_PUBLIC_HOST + '/api/products', { cache: 'no-store' });
-  const data = await response.json();
+  const response = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/productsv2', {timeout: 180000});
+  const data = response.data;
   return data;
 };
 

@@ -1,8 +1,10 @@
-import React from 'react';
-import LoadingSpinner from '@/components/LoadingSpinner';
+import LoadingSpinner from "@/components/LoadingSpinner";
 
-const Loading: React.FC = () => {
-  return <LoadingSpinner />;
-};
+const Loading = () => {
+    return(
+        <LoadingSpinner>
+        </LoadingSpinner>
+    )
+}
 
 export default Loading;
